@@ -9,10 +9,7 @@ P_COLOR = RED
 
 def get_vect_tex(*strings):
     result = ["\\vec{\\textbf{%s}}"%s for s in strings]
-    if len(result) == 1:
-        return result[0]
-    else:
-        return result
+    return result[0] if len(result) == 1 else result
 
 def get_perm_sign(*permutation):
     identity = np.identity(len(permutation))
@@ -496,10 +493,7 @@ class ContrastDotAndCross(Scene):
     def add_cross_product(self):
         colors = [X_COLOR, Y_COLOR, Z_COLOR]
 
-        arrays = [
-            [random.randint(0, 9) for in_count in range(3)]
-            for out_count in range(2)
-        ]
+        arrays = [[random.randint(0, 9) for _ in range(3)] for _ in range(2)]
         matrices = list(map(Matrix, arrays))
         for matrix in matrices:
             for entry, color in zip(matrix.get_entries(), colors):

@@ -199,7 +199,7 @@ class DotProductToTransformSymbol(Scene):
         vector.set_column_colors(YELLOW)
         _input = Matrix(["x", "y"])
         _input.get_entries().set_color_by_gradient(X_COLOR, Y_COLOR)
-        left_input, right_input = [_input.copy() for x in range(2)]
+        left_input, right_input = [_input.copy() for _ in range(2)]
         dot, equals = list(map(Tex, ["\\cdot", "="]))
         equation = VGroup(
             vector, dot, left_input, equals,
@@ -292,9 +292,9 @@ class ThreeStepPlan(Scene):
 
         v_tex, w_tex = get_vect_tex(*"vw")
         v_text, w_text, cross_text = [
-            "$%s$"%s 
-            for s in (v_tex, w_tex, v_tex + "\\times" + w_tex)
+            "$%s$" % s for s in (v_tex, w_tex, f'{v_tex}\\times{w_tex}')
         ]
+
         steps = [
             TexText(
                 "1. Define a 3d-to-1d", "linear \\\\", "transformation",
@@ -644,10 +644,7 @@ class DefineDualTransform(Scene):
         input_entries = self.input_array.get_entries()
         dot_components = VGroup()
         for p, x, i in zip(p_entries, input_entries, it.count()):
-            if i == 2:
-                x.sym  = Tex("=")
-            else:
-                x.sym  = Tex("+")
+            x.sym = Tex("=") if i == 2 else Tex("+")
             p.sym = Tex("\\cdot")
             p.target = p.copy().scale(2)
             x.target = x.copy().scale(2)
