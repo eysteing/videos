@@ -87,22 +87,19 @@ class ThisSeriesOrdering(RandolphScene):
         line.next_to(title, DOWN, buff = SMALL_BUFF)
         line.to_edge(LEFT, buff = 0)
 
-        chapters = VMobject(*[
-            TexText("\\small " + text)
-            for text in [
-                "Chapter 1: Vectors, what even are they?",
-                "Chapter 2: Linear combinations, span and bases",
-                "Chapter 3: Matrices as linear transformations",
-                "Chapter 4: Matrix multiplication as composition",
-                "Chapter 5: The determinant",
-                "Chapter 6: Inverse matrices, column space and null space",
-                "Chapter 7: Dot products and duality",
-                "Chapter 8: Cross products via transformations",
-                "Chapter 9: Change of basis",
-                "Chapter 10: Eigenvectors and eigenvalues",
-                "Chapter 11: Abstract vector spaces",
-            ]
-        ])
+        chapters = VMobject(*[TexText(f"\\small {text}") for text in [
+                    "Chapter 1: Vectors, what even are they?",
+                    "Chapter 2: Linear combinations, span and bases",
+                    "Chapter 3: Matrices as linear transformations",
+                    "Chapter 4: Matrix multiplication as composition",
+                    "Chapter 5: The determinant",
+                    "Chapter 6: Inverse matrices, column space and null space",
+                    "Chapter 7: Dot products and duality",
+                    "Chapter 8: Cross products via transformations",
+                    "Chapter 9: Change of basis",
+                    "Chapter 10: Eigenvectors and eigenvalues",
+                    "Chapter 11: Abstract vector spaces",
+                ]])
         chapters.arrange(
             DOWN, buff = SMALL_BUFF, aligned_edge = LEFT
         )
@@ -1150,7 +1147,7 @@ class FollowVectorViaCoordinates(TwoDToOneDScene):
                 Tex("L(\\hat{\\%smath})"%char)
                 for char in ("i", "j")
             ]
-            
+
         new_labels[0].set_color(X_COLOR)
         new_labels[1].set_color(Y_COLOR)
 
@@ -1165,7 +1162,7 @@ class FollowVectorViaCoordinates(TwoDToOneDScene):
         scaling_anim_tuples = self.get_scaling_anim_tuples(
             new_labels, array, [UP, DOWN]
         )
-        for i, anim_tuple in enumerate(scaling_anim_tuples):
+        for anim_tuple in scaling_anim_tuples:
             self.play(*anim_tuple)
             movers = VMobject(*self.get_mobjects_from_last_animation())
             self.wait()
@@ -1812,7 +1809,7 @@ class GeneralTwoDOneDMatrixMultiplication(TwoDOneDMatrixMultiplication):
     def construct(self):
         TwoDOneDMatrixMultiplication.construct(self)
         everything = VGroup(*self.get_mobjects())
-        to_fade = [m for m in everything if isinstance(m, Brace) or isinstance(m, TexText)]
+        to_fade = [m for m in everything if isinstance(m, (Brace, TexText))]
 
         u = Matrix(self.matrix[0])
         v = Matrix(self.vector)
@@ -1840,7 +1837,7 @@ class GeneralTwoDOneDMatrixMultiplication(TwoDOneDMatrixMultiplication):
         self.add(*everything)
         self.remove(*to_fade)
 
-        self.play(Write(words, run_time = 2))        
+        self.play(Write(words, run_time = 2))
         self.play(ShowCreation(dot_product))
         self.show_product(u, v)
 
